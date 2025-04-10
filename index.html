@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive List Operations</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Interactive List Operations</h1>
+      <p class="author">Made by Ashish Jaiswal</p>
+    </header>
+    
+    <!-- Type Toggle -->
+    <section class="section toggle-type">
+      <label>Choose List Data Type:</label>
+      <input type="radio" id="stringType" name="dataType" value="string" checked>
+      <label for="stringType">String</label>
+      <input type="radio" id="numberType" name="dataType" value="number">
+      <label for="numberType">Number</label>
+    </section>
+
+    <!-- Section to build initial list -->
+    <section class="section" id="initSection">
+      <label>Enter Initial Elements (separated by commas):</label>
+      <input type="text" id="initInput" placeholder="e.g., Apple, Banana, Cherry">
+      <button id="initButton">Create List</button>
+    </section>
+    
+    <!-- Operations section -->
+    <section class="section" id="opsSection" style="display: none;">
+      <h2>List Operations</h2>
+      <button onclick="displayList()">Display List</button>
+      <button onclick="traverseForward()">Traverse Forward</button>
+      <button onclick="traverseBackward()">Traverse Backward</button>
+      <br>
+      <button onclick="showInsert()">Insert Element</button>
+      <button onclick="showReplaceByIndex()">Replace by Index</button>
+      <button onclick="showRemoveByIndex()">Remove by Index</button>
+      <br>
+      <button onclick="showSearch()">Search by Value</button>
+      <button onclick="showUpdateByValue()">Update by Value</button>
+      <br>
+      <button onclick="sortList()">Sort List</button>
+      <button onclick="reverseList()">Reverse List</button>
+    </section>
+
+    <!-- Dynamic operations panel -->
+    <section class="section" id="dynamicOps" style="display: none;">
+      <label id="dynamicLabel"></label>
+      <input type="text" id="dynamicInput1" placeholder="">
+      <input type="text" id="dynamicInput2" placeholder="" style="display: none;">
+      <button id="dynamicSubmit">Submit</button>
+      <button onclick="hideDynamicOps()">Cancel</button>
+    </section>
+    
+    <!-- Output display -->
+    <section class="section">
+      <label>Output:</label>
+      <div id="output"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
