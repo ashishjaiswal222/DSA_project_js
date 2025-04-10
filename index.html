@@ -3,102 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Interactive List Operations</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-      color: #333;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .section {
-      margin-bottom: 20px;
-    }
-    .section label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    .section input[type="text"],
-    .section input[type="number"],
-    .section select {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 15px;
-      margin: 5px 2px;
-      border: none;
-      background: #28a745;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background: #218838;
-    }
-    button.secondary {
-      background: #007bff;
-    }
-    button.secondary:hover {
-      background: #0069d9;
-    }
-    button.danger {
-      background: #dc3545;
-    }
-    button.danger:hover {
-      background: #c82333;
-    }
-    #output {
-      background: #eef;
-      padding: 10px;
-      border: 1px solid #ccc;
-      min-height: 40px;
-      margin-top: 10px;
-      border-radius: 4px;
-      font-family: monospace;
-      white-space: pre-wrap;
-    }
-    .toggle-type {
-      margin: 10px 0;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Interactive List Operations</h1>
+    <header>
+      <h1>Interactive List Operations</h1>
+      <p class="author">Made by Ashish Jaiswal</p>
+    </header>
     
     <!-- Type Toggle -->
-    <div class="section toggle-type">
+    <section class="section toggle-type">
       <label>Choose List Data Type:</label>
       <input type="radio" id="stringType" name="dataType" value="string" checked>
       <label for="stringType">String</label>
       <input type="radio" id="numberType" name="dataType" value="number">
       <label for="numberType">Number</label>
-    </div>
+    </section>
 
     <!-- Section to build initial list -->
-    <div class="section" id="initSection">
+    <section class="section" id="initSection">
       <label>Enter Initial Elements (separated by commas):</label>
       <input type="text" id="initInput" placeholder="e.g., Apple, Banana, Cherry">
       <button id="initButton">Create List</button>
-    </div>
+    </section>
     
     <!-- Operations section -->
-    <div class="section" id="opsSection" style="display: none;">
+    <section class="section" id="opsSection" style="display: none;">
       <h2>List Operations</h2>
       <button onclick="displayList()">Display List</button>
       <button onclick="traverseForward()">Traverse Forward</button>
@@ -113,250 +44,24 @@
       <br>
       <button onclick="sortList()">Sort List</button>
       <button onclick="reverseList()">Reverse List</button>
-    </div>
+    </section>
 
     <!-- Dynamic operations panel -->
-    <div class="section" id="dynamicOps" style="display: none;">
+    <section class="section" id="dynamicOps" style="display: none;">
       <label id="dynamicLabel"></label>
       <input type="text" id="dynamicInput1" placeholder="">
       <input type="text" id="dynamicInput2" placeholder="" style="display: none;">
       <button id="dynamicSubmit">Submit</button>
       <button onclick="hideDynamicOps()">Cancel</button>
-    </div>
+    </section>
     
     <!-- Output display -->
-    <div class="section">
+    <section class="section">
       <label>Output:</label>
       <div id="output"></div>
-    </div>
+    </section>
   </div>
-  
-  <script>
-    // Global list, type is "string" or "number"
-    let list = [];
-    let dataType = "string"; // default
 
-    // Update data type based on radio buttons
-    const radios = document.getElementsByName("dataType");
-    radios.forEach(radio => {
-      radio.addEventListener("change", function() {
-        dataType = this.value;
-        appendOutput("Data type switched to: " + dataType);
-      });
-    });
-
-    // Helper function to print list without square brackets
-    function printList(listArray) {
-      return listArray.join(" ");
-    }
-
-    // Output the list to our output div
-    function displayList() {
-      appendOutput("Current List: " + printList(list));
-    }
-
-    // Append text to output (with new line)
-    function appendOutput(text) {
-      const outDiv = document.getElementById("output");
-      outDiv.textContent += text + "\n";
-    }
-
-    // Clear output
-    function clearOutput() {
-      document.getElementById("output").textContent = "";
-    }
-
-    // Create initial list using user input from initInput
-    document.getElementById("initButton").addEventListener("click", function() {
-      const initText = document.getElementById("initInput").value;
-      if (initText.trim() === "") {
-        alert("Please enter some elements separated by commas.");
-        return;
-      }
-      let elements = initText.split(",").map(el => el.trim());
-      // If number mode, try parsing as numbers.
-      if (dataType === "number") {
-        elements = elements.map(el => Number(el));
-      }
-      list = elements;
-      document.getElementById("opsSection").style.display = "block";
-      appendOutput("Initial list created: " + printList(list));
-    });
-
-    // Show dynamic panel for insert, update, remove, search etc.
-    function showDynamicOps(labelText, placeholder1, placeholder2, callback) {
-      document.getElementById("dynamicLabel").textContent = labelText;
-      document.getElementById("dynamicInput1").placeholder = placeholder1;
-      if (placeholder2) {
-        document.getElementById("dynamicInput2").placeholder = placeholder2;
-        document.getElementById("dynamicInput2").style.display = "block";
-      } else {
-        document.getElementById("dynamicInput2").style.display = "none";
-      }
-      document.getElementById("dynamicOps").style.display = "block";
-      document.getElementById("dynamicSubmit").onclick = function() {
-        // Call the provided callback function with inputs
-        const val1 = document.getElementById("dynamicInput1").value;
-        const val2 = document.getElementById("dynamicInput2").value;
-        callback(val1, val2);
-        hideDynamicOps();
-      };
-    }
-
-    function hideDynamicOps() {
-      document.getElementById("dynamicOps").style.display = "none";
-      document.getElementById("dynamicInput1").value = "";
-      document.getElementById("dynamicInput2").value = "";
-    }
-
-    // Insert element operation
-    function showInsert() {
-      showDynamicOps("Insert: enter index and element (comma-separated)", "e.g., 2", "e.g., NewElement", function(input, unused) {
-        const parts = input.split(",");
-        if (parts.length < 2) {
-          appendOutput("Invalid input for insertion.");
-          return;
-        }
-        let index = Number(parts[0].trim());
-        let element = parts[1].trim();
-        if (dataType === "number") {
-          element = Number(element);
-        }
-        if (isNaN(index) || index < 0 || index > list.length) {
-          appendOutput("Invalid index for insertion.");
-          return;
-        }
-        list.splice(index, 0, element);
-        appendOutput("After insertion: " + printList(list));
-      });
-    }
-
-    // Replace by index operation
-    function showReplaceByIndex() {
-      showDynamicOps("Replace by Index: enter index and new element (comma-separated)", "e.g., 1", "e.g., NewElement", function(input, unused) {
-        const parts = input.split(",");
-        if (parts.length < 2) {
-          appendOutput("Invalid input for replacement.");
-          return;
-        }
-        let index = Number(parts[0].trim());
-        let newElement = parts[1].trim();
-        if (dataType === "number") {
-          newElement = Number(newElement);
-        }
-        if (isNaN(index) || index < 0 || index >= list.length) {
-          appendOutput("Invalid index for replacement.");
-          return;
-        }
-        list[index] = newElement;
-        appendOutput("After replacement: " + printList(list));
-      });
-    }
-
-    // Remove by index operation
-    function showRemoveByIndex() {
-      showDynamicOps("Remove by Index: enter index to remove", "e.g., 2", null, function(input, unused) {
-        let index = Number(input.trim());
-        if (isNaN(index) || index < 0 || index >= list.length) {
-          appendOutput("Invalid index for removal.");
-          return;
-        }
-        list.splice(index, 1);
-        appendOutput("After removal: " + printList(list));
-      });
-    }
-
-    // Search by value (ignore case if string)
-    function showSearch() {
-      showDynamicOps("Search: enter value to search for", "Value", null, function(input, unused) {
-        const searchValue = input.trim();
-        let foundIndices = [];
-        list.forEach((val, idx) => {
-          if (dataType === "string") {
-            if (String(val).toLowerCase() === searchValue.toLowerCase()) {
-              foundIndices.push(idx);
-            }
-          } else {
-            if (val === Number(searchValue)) {
-              foundIndices.push(idx);
-            }
-          }
-        });
-        if (foundIndices.length === 0) {
-          appendOutput("Search: Element not found.");
-        } else {
-          appendOutput("Search: Found at indices: " + foundIndices.join(", "));
-        }
-      });
-    }
-
-    // Update (replace) by value (ignore case if string)
-    function showUpdateByValue() {
-      showDynamicOps("Update by Value: enter old and new value (comma-separated)", "e.g., oldVal", "e.g., newVal", function(input, unused) {
-        const parts = input.split(",");
-        if (parts.length < 2) {
-          appendOutput("Invalid input for update.");
-          return;
-        }
-        const oldVal = parts[0].trim();
-        let newVal = parts[1].trim();
-        if (dataType === "number") {
-          newVal = Number(newVal);
-        }
-        let updated = false;
-        for (let i = 0; i < list.length; i++) {
-          if (dataType === "string") {
-            if (String(list[i]).toLowerCase() === oldVal.toLowerCase()) {
-              list[i] = newVal;
-              updated = true;
-            }
-          } else {
-            if (list[i] === Number(oldVal)) {
-              list[i] = newVal;
-              updated = true;
-            }
-          }
-        }
-        if (updated) {
-          appendOutput("After update: " + printList(list));
-        } else {
-          appendOutput("Update: Element not found.");
-        }
-      });
-    }
-
-    // Sort list lexicographically (or numerically, if in number mode)
-    function sortList() {
-      if (dataType === "string") {
-        list.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-      } else {
-        list.sort((a, b) => a - b);
-      }
-      appendOutput("After sorting: " + printList(list));
-    }
-
-    // Reverse list
-    function reverseList() {
-      list.reverse();
-      appendOutput("After reversing: " + printList(list));
-    }
-
-    // For backward and forward traversal, we simply display indices and values
-    function traverseForward() {
-      let out = "Forward traversal:\n";
-      for (let i = 0; i < list.length; i++) {
-        out += "Index " + i + ": " + list[i] + "\n";
-      }
-      appendOutput(out);
-    }
-
-    function traverseBackward() {
-      let out = "Backward traversal:\n";
-      for (let i = list.length - 1; i >= 0; i--) {
-        out += "Index " + i + ": " + list[i] + "\n";
-      }
-      appendOutput(out);
-    }
-  </script>
+  <script src="/js/script.js"></script>
 </body>
 </html>

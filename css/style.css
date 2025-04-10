@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+  color: #333;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.author {
+  font-size: 14px;
+  color: #666;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.section input[type="text"],
+.section input[type="number"],
+.section select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px 2px;
+  border: none;
+  background: #28a745;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #218838;
+}
+
+button.secondary {
+  background: #007bff;
+}
+
+button.secondary:hover {
+  background: #0069d9;
+}
+
+button.danger {
+  background: #dc3545;
+}
+
+button.danger:hover {
+  background: #c82333;
+}
+
+#output {
+  background: #eef;
+  padding: 10px;
+  border: 1px solid #ccc;
+  min-height: 40px;
+  margin-top: 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+.toggle-type {
+  margin: 10px 0;
+}
